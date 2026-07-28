@@ -16,13 +16,13 @@ import { ProfileDropdown } from "./ProfileDropdown"
 
 const navItems = [
     { name: "Home", href: "/" },
-    { name: "Menu", href: "/menu" },
-    { name: "Find a branch", href: "/find-a-branch" },
+    { name: "Properties", href: "/properties" },
+    { name: "Categories", href: "/categories" },
 ]
 const mobileNav = [
     { name: "Home", href: "/" },
-    { name: "Menu", href: "/menu" },
-    { name: "Find a branch", href: "/find-a-branch" },
+    { name: "Properties", href: "/properties" },
+    { name: "Categories", href: "/categories" },
     { name: "Profile", href: "/profile" },
 ]
 

@@ -4,6 +4,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/shared/theme-provider"
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
+import { Toaster } from 'sonner';
+
 
 const roboto = Roboto({subsets:['latin'],variable:'--font-sans'})
 
@@ -31,6 +33,7 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
+        <Toaster />
       </body>
     </html>
   )
