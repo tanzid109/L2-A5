@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import Link from "next/link";
-import { User, ClipboardList, MapPin, LogOut, Loader2 } from "lucide-react";
+import { User, LogOut, Loader2, LucideLayoutDashboard } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,14 +17,22 @@ import {
 } from "@/components/ui/avatar";
 import { logout } from "@/service/logout";
 
+type Role = "TENANT" | "LANDLORD" | "ADMIN";
+
 interface ProfileDropdownProps {
     user: {
         name: string;
         email?: string;
-        role?: string;
+        role?: Role;
         avatarUrl?: string;
     };
 }
+
+const dashboardByRole: Record<Role, { href: string; label: string }> = {
+    TENANT: { href: "/tenant-dashboard", label: "My Dashboard" },
+    LANDLORD: { href: "/landlord-dashboard", label: "My Dashboard" },
+    ADMIN: { href: "/admin-dashboard", label: "My Dashboard" },
+};
 
 export function ProfileDropdown({ user }: ProfileDropdownProps) {
     const [isPending, startTransition] = useTransition();
@@ -35,6 +43,8 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
         .join("")
         .slice(0, 2)
         .toUpperCase();
+
+    const dashboard = user.role ? dashboardByRole[user.role] : dashboardByRole.TENANT;
 
     const handleSignOut = () => {
         startTransition(async () => {
@@ -84,32 +94,14 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
 
                 <DropdownMenuSeparator className="bg-border mx-0" />
 
-                {/* My Account */}
+                {/* Dashboard (role-based) */}
                 <DropdownMenuItem asChild className="rounded-none px-5 py-3 cursor-pointer focus:bg-accent">
-                    <Link href="/profile" className="flex items-center gap-3 text-popover-foreground">
-                        <User className="h-5 w-5 shrink-0 text-muted-foreground" />
-                        <span className="text-base font-medium">My Account</span>
+                    <Link href={dashboard.href} className="flex items-center gap-3 text-popover-foreground">
+                        <LucideLayoutDashboard className="h-5 w-5 shrink-0 text-muted-foreground" />
+                        <span className="text-base font-medium">{dashboard.label}</span>
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-border mx-0" />
-                {/* My Orders */}
-                <DropdownMenuItem asChild className="rounded-none px-5 py-3 cursor-pointer focus:bg-accent">
-                    <Link href="/profile/orders" className="flex items-center gap-3 text-popover-foreground">
-                        <ClipboardList className="h-5 w-5 shrink-0 text-muted-foreground" />
-                        <span className="text-base font-medium">My Orders</span>
-                    </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-border mx-0" />
-                {/* Addresses */}
-                <DropdownMenuItem asChild className="rounded-none px-5 py-3 cursor-pointer focus:bg-accent">
-                    <Link href="/profile/address" className="flex items-center gap-3 text-popover-foreground">
-                        <MapPin className="h-5 w-5 shrink-0 text-muted-foreground" />
-                        <span className="text-base font-medium">Addresses</span>
-                    </Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuSeparator className="bg-border mx-0" />
-
                 {/* Sign Out */}
                 <DropdownMenuItem
                     onClick={handleSignOut}
