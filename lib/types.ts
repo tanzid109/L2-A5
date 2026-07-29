@@ -167,3 +167,66 @@ export interface DeletePropertyResponse {
   statusCode?: number
   message?: string
 }
+
+export interface MyRentalRequestProperty {
+  id: string
+  landlordId: string
+  categoryId: string
+  title: string
+  description: string
+  address: string
+  city: string
+  price: string
+  bedrooms: number
+  bathrooms: number
+  status: string
+  createdAt: string
+  updatedAt: string
+  category: {
+    id: string
+    name: string
+    createdBy: string
+    createdAt: string
+    updatedAt: string
+  }
+  landlord: {
+    id: string
+    name: string
+    email: string
+    phone: string
+  }
+}
+
+export interface MyRentalRequest {
+  id: string
+  propertyId: string
+  tenantId: string
+  status: "PENDING" | "APPROVED" | "ACTIVE" | "REJECTED" | "COMPLETED"
+  startDate: string | null
+  endDate: string | null
+  totalPrice: number | null
+  createdAt: string
+  updatedAt: string
+  property: MyRentalRequestProperty
+  payment?: {
+    status: "PENDING" | "SUCCESS" | "FAILED"
+    provider: string
+    paidAt: string | null
+  } | null
+}
+
+export interface GetMyRentalRequestsResponse {
+  success: boolean
+  statusCode?: number
+  message: string
+  data?: MyRentalRequest[]
+}
+
+export interface CreatePaymentResponse {
+  success: boolean
+  statusCode?: number
+  message: string
+  data?: {
+    checkoutUrl: string
+  }
+}
