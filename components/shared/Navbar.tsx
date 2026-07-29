@@ -25,7 +25,7 @@ interface NavbarUser {
     name: string
     email: string
     phone?: string
-    role: string
+    role: "TENANT" | "LANDLORD" | "ADMIN"
     activeStatus: string
 }
 
