@@ -5,9 +5,11 @@ import { ThemeProvider } from "@/components/shared/theme-provider"
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import { Toaster } from 'sonner';
+import { getMe } from "@/service/getMe";
+import Navbar from "@/components/shared/Navbar";
 
 
-const roboto = Roboto({subsets:['latin'],variable:'--font-sans'})
+const roboto = Roboto({ subsets: ['latin'], variable: '--font-sans' })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -20,11 +22,14 @@ export const metadata: Metadata = {
 }
 
 
-export default function RootLayout({
+const RootLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode
-}>) {
+}>) => {
+
+
+  const user = await getMe()
   return (
     <html
       lang="en"
@@ -32,9 +37,14 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", roboto.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Navbar user={user}/>
+          {children}
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>
   )
 }
+
+export default RootLayout

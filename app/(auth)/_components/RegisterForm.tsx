@@ -39,7 +39,7 @@ const signUpSchema = z.object({
 
 type SignUpFormValues = z.infer<typeof signUpSchema>
 
-export default function RegisterForm({ }: React.ComponentProps<"form">) {
+export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
 

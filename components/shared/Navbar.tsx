@@ -19,20 +19,38 @@ const navItems = [
     { name: "Properties", href: "/properties" },
     { name: "Categories", href: "/categories" },
 ]
-const mobileNav = [
-    { name: "Home", href: "/" },
-    { name: "Properties", href: "/properties" },
-    { name: "Categories", href: "/categories" },
-    { name: "Profile", href: "/profile" },
-]
 
-export default function Navbar() {
+interface NavbarUser {
+    id: string
+    name: string
+    email: string
+    phone?: string
+    role: string
+    activeStatus: string
+}
+
+interface GetMeResponse {
+    success: boolean
+    message?: string
+    data?: { user: NavbarUser }
+}
+
+export default function Navbar({ user }: { user: GetMeResponse }) {
     const pathname = usePathname()
     const { resolvedTheme, setTheme } = useTheme()
     const [mounted, setMounted] = React.useState(false)
 
+    React.useEffect(() => setMounted(true), [])
+
     const isDark = resolvedTheme === "dark"
     const toggleTheme = () => setTheme(isDark ? "light" : "dark")
+
+    const currentUser = user?.success ? user.data?.user : undefined
+    const isLoggedIn = Boolean(currentUser)
+
+    const mobileNav = isLoggedIn
+        ? [...navItems, { name: "Profile", href: "/profile" }]
+        : navItems
 
     return (
         <nav className="bg-background border-b border-border sticky top-0 z-50 w-full py-2">
@@ -74,7 +92,23 @@ export default function Navbar() {
                     >
                         {mounted && isDark ? <Sun size={18} /> : <Moon size={18} />}
                     </button>
-                    <ProfileDropdown />
+
+                    {isLoggedIn && currentUser ? (
+                        <ProfileDropdown user={currentUser} />
+                    ) : (
+                        <div className="flex items-center gap-3">
+                            <Link href="/login">
+                                <Button className="bg-transparent border border-border text-foreground hover:bg-accent">
+                                    Log In
+                                </Button>
+                            </Link>
+                            <Link href="/register">
+                                <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                    Register
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
 
                 {/* Mobile Menu */}
@@ -124,16 +158,35 @@ export default function Navbar() {
 
                                 {/* Mobile Auth Buttons */}
                                 <div className="mt-8 flex flex-col gap-3">
-                                    <SheetClose asChild>
-                                        <Button className="w-full py-5 bg-transparent border border-border text-foreground hover:bg-accent">
-                                            Log In
-                                        </Button>
-                                    </SheetClose>
-                                    <SheetClose asChild>
-                                        <Button className="w-full py-5 bg-primary text-primary-foreground hover:bg-primary/90">
-                                            Register
-                                        </Button>
-                                    </SheetClose>
+                                    {isLoggedIn ? (
+                                        <SheetClose asChild>
+                                            <form action="/api/logout" method="post">
+                                                <Button
+                                                    type="submit"
+                                                    className="w-full py-5 bg-transparent border border-border text-destructive hover:bg-destructive/10"
+                                                >
+                                                    Sign Out
+                                                </Button>
+                                            </form>
+                                        </SheetClose>
+                                    ) : (
+                                        <>
+                                            <SheetClose asChild>
+                                                <Link href="/login">
+                                                    <Button className="w-full py-5 bg-transparent border border-border text-foreground hover:bg-accent">
+                                                        Log In
+                                                    </Button>
+                                                </Link>
+                                            </SheetClose>
+                                            <SheetClose asChild>
+                                                <Link href="/register">
+                                                    <Button className="w-full py-5 bg-primary text-primary-foreground hover:bg-primary/90">
+                                                        Register
+                                                    </Button>
+                                                </Link>
+                                            </SheetClose>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </SheetContent>
