@@ -1,5 +1,5 @@
 import { getMyRentalRequests } from "../../_actions/tenantAction"
-import { MyRentalRequestCard } from "../../_components/Myrentalrequestcard"
+import { MyRentalRequestCard } from "../../_components/MyRentalRequestCard"
 
 const page = async () => {
     const { success, data, message } = await getMyRentalRequests()

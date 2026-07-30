@@ -1,5 +1,6 @@
-import { LucideProps } from "lucide-react"
+import { LucideIcon, LucideProps } from "lucide-react"
 import { ForwardRefExoticComponent, RefAttributes } from "react"
+import { IconType } from "react-icons"
 
 export type IPostStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED"
 
@@ -66,9 +67,7 @@ export type NavbarProps = {
 export type ISidebarItem = {
   label: string
   href: string
-  icon: ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-  >
+  icon: LucideIcon | IconType
 }
 
 export interface RentalTenant {
@@ -229,4 +228,53 @@ export interface CreatePaymentResponse {
   data?: {
     checkoutUrl: string
   }
+}
+
+export interface PaymentRentalProperty {
+    id: string
+    landlordId: string
+    categoryId: string
+    title: string
+    description?: string
+    address: string
+    city: string
+    price: string
+    bedrooms: number
+    bathrooms: number
+    status: "AVAILABLE" | "RENTED" | "PENDING"
+    createdAt: string
+    updatedAt: string
+}
+
+export interface PaymentRentalRequest {
+    id: string
+    propertyId: string
+    tenantId: string
+    status: "PENDING" | "APPROVED" | "ACTIVE" | "REJECTED" | "COMPLETED"
+    startDate: string | null
+    endDate: string | null
+    totalPrice: number | null
+    createdAt: string
+    updatedAt: string
+    property: PaymentRentalProperty
+}
+
+export interface Payment {
+    id: string
+    rentalRequestId: string
+    transactionId: string
+    amount: number
+    provider: string
+    status: "SUCCESS" | "PENDING" | "FAILED"
+    paidAt: string | null
+    createdAt: string
+    updatedAt: string
+    rentalRequest: PaymentRentalRequest
+}
+
+export interface GetMyPaymentsResponse {
+    success: boolean
+    statusCode?: number
+    message?: string
+    data?: Payment[]
 }

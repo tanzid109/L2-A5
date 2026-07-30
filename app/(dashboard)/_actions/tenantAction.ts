@@ -1,7 +1,6 @@
 "use server"
 
-import { GetMyRentalRequestsResponse, CreatePaymentResponse } from "@/lib/types"
-import { revalidateTag } from "next/cache"
+import { GetMyRentalRequestsResponse, CreatePaymentResponse, GetMyPaymentsResponse } from "@/lib/types"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
@@ -101,4 +100,53 @@ export const makePayment = async (
   }
 
   return result
+}
+
+
+export const getMyPayments = async (): Promise<GetMyPaymentsResponse> => {
+    try {
+        const cookieStore = await cookies()
+        const accessToken = cookieStore.get("accessToken")?.value
+
+        if (!accessToken) {
+            return {
+                success: false,
+                message: "You must be logged in to view your payments.",
+            }
+        }
+
+        const url = `${process.env.BACKEND_API_URL}/api/payments`
+
+        const res = await fetch(url, {
+            method: "GET",
+            headers: {
+                Cookie: `accessToken=${accessToken}`,
+            },
+            cache: "no-store",
+            next: {
+                tags: ["my-payments"],
+            },
+        })
+
+        const result = await res.json().catch(() => ({}))
+
+        if (!res.ok) {
+            return {
+                success: false,
+                statusCode: res.status,
+                message: result?.message ?? `Failed to fetch your payments (${res.status})`,
+            }
+        }
+
+        return result
+    } catch (error) {
+        console.error("getMyPayments error:", error)
+        return {
+            success: false,
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "Something went wrong while fetching your payments",
+        }
+    }
 }
