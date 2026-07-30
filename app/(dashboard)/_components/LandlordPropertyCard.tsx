@@ -6,11 +6,13 @@ import { MapPin, BedDouble, Bath, Pencil, Trash2, Loader2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { deleteProperty } from "../_actions/landlordActions"
+import { Category, deleteProperty } from "../_actions/landlordActions"
 import { MyProperty } from "@/lib/types"
+import { EditPropertyDialog } from "./Editpropertydialog"
 
 interface LandlordPropertyCardProps {
     property: MyProperty
+    categories: Category[]
 }
 
 const statusStyles: Record<string, string> = {
@@ -19,7 +21,7 @@ const statusStyles: Record<string, string> = {
     PENDING: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
 }
 
-export function LandlordPropertyCard({ property }: LandlordPropertyCardProps) {
+export function LandlordPropertyCard({ property, categories }: LandlordPropertyCardProps) {
     const [isPending, startTransition] = useTransition()
     const [deleted, setDeleted] = useState(false)
 
@@ -87,15 +89,9 @@ export function LandlordPropertyCard({ property }: LandlordPropertyCardProps) {
 
                 {/* Actions */}
                 <div className="flex items-center gap-2 pt-3">
-                    <Link href={`/landlord/properties/${property.id}/edit`} className="flex-1">
-                        <Button
-                            variant="outline"
-                            className="w-full gap-1.5 border-border text-foreground hover:bg-accent"
-                        >
-                            <Pencil size={14} />
-                            Edit
-                        </Button>
-                    </Link>
+                    <div className="flex-1">
+                        <EditPropertyDialog property={property} categories={categories} />
+                    </div>
                     <Button
                         variant="outline"
                         onClick={handleDelete}

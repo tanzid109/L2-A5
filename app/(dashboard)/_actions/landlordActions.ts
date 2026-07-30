@@ -198,7 +198,7 @@ export const rentalStatusChange = async (
       }
     }
 
-    revalidateTag("landlord-rentals","max")
+    revalidateTag("landlord-rentals", "max")
 
     return {
       success: true,
@@ -212,6 +212,70 @@ export const rentalStatusChange = async (
         error instanceof Error
           ? error.message
           : "Something went wrong while updating the rental request.",
+    }
+  }
+}
+
+export interface Category {
+  id: string
+  name: string
+  createdBy: string
+  createdAt: string
+  updatedAt: string
+}
+
+interface GetCategoryResponse {
+  success: boolean
+  statusCode?: number
+  message?: string
+  data?: {
+    categories: Category[]
+  }
+}
+
+export const getCategory = async (): Promise<GetCategoryResponse> => {
+  try {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get("accessToken")?.value
+
+    if (!accessToken) {
+      return {
+        success: false,
+        message: "You must be logged in to view categories.",
+      }
+    }
+
+    const url = `${process.env.BACKEND_API_URL}/api/category`
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Cookie: `accessToken=${accessToken}`,
+      },
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60,
+        tags: ["categories"],
+      },
+    })
+
+    if (!res.ok) {
+      return {
+        success: false,
+        statusCode: res.status,
+        message: `Failed to fetch categories (${res.status})`,
+      }
+    }
+
+    return await res.json()
+  } catch (error) {
+    console.error("getCategory error:", error)
+    return {
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong while fetching categories",
     }
   }
 }

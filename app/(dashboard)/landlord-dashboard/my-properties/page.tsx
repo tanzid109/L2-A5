@@ -1,9 +1,9 @@
-import { getMyProperties } from "../../_actions/landlordActions"
+import { getCategory, getMyProperties } from "../../_actions/landlordActions"
 import { LandlordPropertyCard } from "../../_components/LandlordPropertyCard"
 
-
-const page= async()=> {
+const page = async () => {
     const { success, data, message } = await getMyProperties()
+    const categoriesRes = await getCategory()
 
     if (!success || !data?.properties?.length) {
         return (
@@ -13,10 +13,12 @@ const page= async()=> {
         )
     }
 
+    const categories = categoriesRes.data?.categories ?? []
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.properties.map((property) => (
-                <LandlordPropertyCard key={property.id} property={property} />
+                <LandlordPropertyCard key={property.id} property={property} categories={categories} />
             ))}
         </div>
     )

@@ -1,5 +1,6 @@
 import { ISidebarItem } from "@/lib/types";
-import { FileText, HouseIcon, LayoutDashboard } from "lucide-react";
+import { FileText, LayoutDashboard } from "lucide-react";
+import { BsFillHouseAddFill, BsHouseFill } from "react-icons/bs";
 
 export const LANDLORD_SIDEBAR_ITEMS: ISidebarItem[] = [
   {
@@ -10,12 +11,16 @@ export const LANDLORD_SIDEBAR_ITEMS: ISidebarItem[] = [
   {
     label: "My Properties",
     href: "/landlord-dashboard/my-properties",
-    icon: HouseIcon,
+    icon: BsHouseFill,
   },
   {
     label: "Rental Requests",
     href: "/landlord-dashboard/rental-requests",
     icon: FileText,
   },
-
+  {
+    label: "Add New Property",
+    href: "/landlord-dashboard/add-property",
+    icon: BsFillHouseAddFill,
+  },
 ]
