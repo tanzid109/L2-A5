@@ -2,6 +2,7 @@ import { ISidebarItem } from "@/lib/types";
 import { LayoutDashboard } from "lucide-react";
 import { BiMoney } from "react-icons/bi";
 import { FaHouseCircleCheck } from "react-icons/fa6";
+import { MdReviews } from "react-icons/md";
 
 export const TENANT_SIDEBAR_ITEMS: ISidebarItem[] = [
   {
@@ -18,5 +19,10 @@ export const TENANT_SIDEBAR_ITEMS: ISidebarItem[] = [
     label: "My Payments",
     href: "/tenant-dashboard/my-payments",
     icon: BiMoney,
+  },
+  {
+    label: "My Reviews",
+    href: "/tenant-dashboard/my-reviews",
+    icon: MdReviews,
   },
 ]

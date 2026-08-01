@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { MyRentalRequest } from "@/lib/types"
 import { makePayment } from "../../_actions/tenantAction"
+import { ReviewDialog } from "./ReviewDialog"
 
 interface MyRentalRequestCardProps {
     request: MyRentalRequest
@@ -33,6 +34,8 @@ export function MyRentalRequestCard({ request }: MyRentalRequestCardProps) {
     const { property, payment } = request
     const [isPending, startTransition] = useTransition()
     const canPay = request.status === "APPROVED" && payment?.status !== "SUCCESS"
+    const canReview = payment?.status === "SUCCESS"
+
 
     const handlePayment = () => {
         startTransition(async () => {
@@ -132,7 +135,6 @@ export function MyRentalRequestCard({ request }: MyRentalRequestCardProps) {
                 </div>
             </div>
 
-            {/* Pay Now — only once the landlord has approved */}
             {canPay && (
                 <Button
                     onClick={handlePayment}
@@ -152,6 +154,9 @@ export function MyRentalRequestCard({ request }: MyRentalRequestCardProps) {
                 <p className="text-xs text-destructive text-center -mt-2">
                     Last payment attempt failed — try again.
                 </p>
+            )}
+            {canReview && (
+                <ReviewDialog propertyId={property.id} />
             )}
         </div>
     )

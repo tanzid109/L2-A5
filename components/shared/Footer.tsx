@@ -8,8 +8,8 @@ const footerLinks = {
         { label: "Properties", href: "/properties" },
     ],
     legal: [
-        { label: "Terms of Service", href: "/terms" },
-        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Service", href: "/#" },
+        { label: "Privacy Policy", href: "/#" },
     ],
     account: [
         { label: "Login", href: "/login" },
@@ -55,7 +55,7 @@ export default function Footer() {
                         <h4 className="text-sm font-semibold text-foreground mb-3">Legal</h4>
                         <ul className="space-y-2">
                             {footerLinks.legal.map((link) => (
-                                <li key={link.href}>
+                                <li key={link.label}>
                                     <Link
                                         href={link.href}
                                         className="text-sm text-muted-foreground hover:text-primary transition-colors"

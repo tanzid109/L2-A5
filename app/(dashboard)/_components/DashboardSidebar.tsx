@@ -31,7 +31,7 @@ export default function DashboardSidebar({ user }: NavbarProps) {
   return (
     <Sidebar
       collapsible="offcanvas"
-      className="border-r border-sidebar-border"
+      className="border-r h-full border-sidebar-border"
     >
       <SidebarContent>
         <SidebarHeader className="px-4 py-4">
