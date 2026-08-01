@@ -1,68 +1,8 @@
-import { LucideIcon, LucideProps } from "lucide-react"
-import { ForwardRefExoticComponent, RefAttributes } from "react"
+import { LucideIcon } from "lucide-react"
 import { IconType } from "react-icons"
 
-export type IPostStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED"
-
-export type IAuthor = {
-  id: string
-  name: string
-  email: string
-  activeStatus: string
-  role: string
-  createdAt: string
-  updatedAt: string
-}
-
-export type IComment = {
-  id: string
-  content: string
-  status: string
-  postId: string
-  authorId: string
-  createdAt: string
-  updatedAt: string
-}
-
-export type IPost = {
-  id: string
-  title: string
-  content: string
-  thumbnail: string | null
-  isFeatured: boolean
-  status: IPostStatus
-  tags: string[]
-  views: number
-  isPremium: boolean
-  authorId: string
-  author?: IAuthor
-  comments?: IComment[]
-  _count?: {
-    comments: number
-  }
-  createdAt: string
-  updatedAt: string
-}
-
-type IUser = {
-  success: boolean
-  message: string
-  data: {
-    user: {
-      id: string
-      name: string
-      email: string
-      activeStatus: string
-      role: string
-      createdAt: string
-      updatedAt: string
-    }
-  }
-}
-
-export type NavbarProps = {
-  user: IUser
-}
+export type UserStatus = "ACTIVE" | "BANNED"
+export type RentalStatusAction = "APPROVED" | "REJECTED"
 
 export type ISidebarItem = {
   label: string
@@ -70,14 +10,9 @@ export type ISidebarItem = {
   icon: LucideIcon | IconType
 }
 
-export interface RentalTenant {
-  id: string
-  name: string
-  email: string
-  phone: string
-}
+// ---------- Shared base entities ----------
 
-export interface RentalPropertyCategory {
+export interface Category {
   id: string
   name: string
   createdBy: string
@@ -85,7 +20,15 @@ export interface RentalPropertyCategory {
   updatedAt: string
 }
 
-export interface RentalProperty {
+export interface PersonSummary {
+  id: string
+  name: string
+  email: string
+  phone?: string
+}
+
+// Base property shape — every "property" variant below is built from this
+export interface BaseProperty {
   id: string
   landlordId: string
   categoryId: string
@@ -99,34 +42,46 @@ export interface RentalProperty {
   status: "AVAILABLE" | "RENTED" | "PENDING"
   createdAt: string
   updatedAt: string
-  category: RentalPropertyCategory
 }
 
-export interface RentalPayment {
-  id: string
-  rentalRequestId: string
-  transactionId: string
-  amount: number
-  provider: string
-  status: "SUCCESS" | "FAILED" | "PENDING"
-  paidAt: string
-  createdAt: string
-  updatedAt: string
+export interface PropertyWithCategory extends BaseProperty {
+  category: Category
 }
 
-export interface RentalRequest {
+export interface PropertyWithLandlord extends PropertyWithCategory {
+  landlord: PersonSummary
+}
+
+// ---------- Rental requests ----------
+
+export interface BaseRentalRequest {
   id: string
   propertyId: string
   tenantId: string
-  status: "PENDING" | "ACTIVE" | "REJECTED" | "COMPLETED"
   startDate: string | null
   endDate: string | null
   totalPrice: number | null
   createdAt: string
   updatedAt: string
-  tenant: RentalTenant
-  property: RentalProperty
-  payment: RentalPayment | null
+}
+
+// Tenant-side view: request has full property+landlord info, minimal payment info
+export interface MyRentalRequest extends BaseRentalRequest {
+  status: "PENDING" | "APPROVED" | "ACTIVE" | "REJECTED" | "COMPLETED"
+  property: PropertyWithLandlord
+  payment?: {
+    status: "PENDING" | "SUCCESS" | "FAILED"
+    provider: string
+    paidAt: string | null
+  } | null
+}
+
+// Landlord-side view: request has tenant info + full property, full payment record
+export interface RentalRequest extends BaseRentalRequest {
+  status: "PENDING" | "ACTIVE" | "REJECTED" | "COMPLETED"
+  tenant: PersonSummary
+  property: PropertyWithCategory
+  payment: Payment | null
 }
 
 export interface GetLandlordRentalRequestsResponse {
@@ -136,29 +91,22 @@ export interface GetLandlordRentalRequestsResponse {
   data?: RentalRequest[]
 }
 
-export interface MyProperty {
-  id: string
-  landlordId: string
-  categoryId: string
-  title: string
-  description?: string
-  address: string
-  city: string
-  price: string
-  bedrooms: number
-  bathrooms: number
-  status: "AVAILABLE" | "RENTED" | "PENDING"
-  createdAt: string
-  updatedAt: string
+export interface GetMyRentalRequestsResponse {
+  success: boolean
+  statusCode?: number
+  message: string
+  data?: MyRentalRequest[]
 }
+
+// ---------- Properties (landlord's own listings) ----------
+
+export type MyProperty = BaseProperty
 
 export interface GetMyPropertiesResponse {
   success: boolean
   statusCode?: number
   message?: string
-  data?: {
-    properties: MyProperty[]
-  }
+  data?: { properties: MyProperty[] }
 }
 
 export interface DeletePropertyResponse {
@@ -167,9 +115,7 @@ export interface DeletePropertyResponse {
   message?: string
 }
 
-export interface MyRentalRequestProperty {
-  id: string
-  landlordId: string
+export interface CreatePropertyPayload {
   categoryId: string
   title: string
   description: string
@@ -178,103 +124,88 @@ export interface MyRentalRequestProperty {
   price: string
   bedrooms: number
   bathrooms: number
-  status: string
-  createdAt: string
-  updatedAt: string
-  category: {
-    id: string
-    name: string
-    createdBy: string
-    createdAt: string
-    updatedAt: string
-  }
-  landlord: {
-    id: string
-    name: string
-    email: string
-    phone: string
-  }
+  status: "AVAILABLE" | "RENTED" | "PENDING"
 }
 
-export interface MyRentalRequest {
-  id: string
-  propertyId: string
-  tenantId: string
-  status: "PENDING" | "APPROVED" | "ACTIVE" | "REJECTED" | "COMPLETED"
-  startDate: string | null
-  endDate: string | null
-  totalPrice: number | null
-  createdAt: string
-  updatedAt: string
-  property: MyRentalRequestProperty
-  payment?: {
-    status: "PENDING" | "SUCCESS" | "FAILED"
-    provider: string
-    paidAt: string | null
-  } | null
-}
-
-export interface GetMyRentalRequestsResponse {
+export interface CreatePropertyResponse {
   success: boolean
   statusCode?: number
-  message: string
-  data?: MyRentalRequest[]
+  message?: string
+  data?: { id: string }
+}
+
+export interface UpdatePropertyResponse {
+  success: boolean
+  statusCode?: number
+  message?: string
+  data?: { id: string }
+}
+
+// ---------- Payments ----------
+
+export interface Payment {
+  id: string
+  rentalRequestId: string
+  transactionId: string
+  amount: number
+  provider: string
+  status: "SUCCESS" | "PENDING" | "FAILED"
+  paidAt: string | null
+  createdAt: string
+  updatedAt: string
+  rentalRequest: BaseRentalRequest & {
+    status: "PENDING" | "APPROVED" | "ACTIVE" | "REJECTED" | "COMPLETED"
+    property: BaseProperty
+  }
+}
+
+export interface GetMyPaymentsResponse {
+  success: boolean
+  statusCode?: number
+  message?: string
+  data?: Payment[]
 }
 
 export interface CreatePaymentResponse {
   success: boolean
   statusCode?: number
   message: string
-  data?: {
-    checkoutUrl: string
-  }
+  data?: { checkoutUrl: string }
 }
 
-export interface PaymentRentalProperty {
-    id: string
-    landlordId: string
-    categoryId: string
-    title: string
-    description?: string
-    address: string
-    city: string
-    price: string
-    bedrooms: number
-    bathrooms: number
-    status: "AVAILABLE" | "RENTED" | "PENDING"
-    createdAt: string
-    updatedAt: string
+// ---------- Categories ----------
+
+export interface GetCategoryResponse {
+  success: boolean
+  statusCode?: number
+  message?: string
+  data?: { categories: Category[] }
 }
 
-export interface PaymentRentalRequest {
-    id: string
-    propertyId: string
-    tenantId: string
-    status: "PENDING" | "APPROVED" | "ACTIVE" | "REJECTED" | "COMPLETED"
-    startDate: string | null
-    endDate: string | null
-    totalPrice: number | null
-    createdAt: string
-    updatedAt: string
-    property: PaymentRentalProperty
+export interface CategoryResponse {
+  success: boolean
+  statusCode?: number
+  message: string
+  data?: { category?: Category; categories?: Category[] }
 }
 
-export interface Payment {
-    id: string
-    rentalRequestId: string
-    transactionId: string
-    amount: number
-    provider: string
-    status: "SUCCESS" | "PENDING" | "FAILED"
-    paidAt: string | null
-    createdAt: string
-    updatedAt: string
-    rentalRequest: PaymentRentalRequest
+// ---------- Reviews ----------
+
+export interface Review {
+  id: string
+  propertyId: string
+  tenantId: string
+  rating: number
+  comment: string
+  createdAt: string
+  updatedAt: string
+  tenant: Pick<PersonSummary, "id" | "name" | "email">
+  property: Pick<BaseProperty, "id" | "title">
 }
 
-export interface GetMyPaymentsResponse {
-    success: boolean
-    statusCode?: number
-    message?: string
-    data?: Payment[]
+export interface GetReviewsResponse {
+  success: boolean
+  statusCode: number
+  message: string
+  data: Review[]
 }

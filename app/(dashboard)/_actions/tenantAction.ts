@@ -193,32 +193,6 @@ export async function createReview(
   }
 }
 
-export interface Review {
-  id: string
-  propertyId: string
-  tenantId: string
-  rating: number
-  comment: string
-  createdAt: string
-  updatedAt: string
-  tenant: {
-    id: string
-    name: string
-    email: string
-  }
-  property: {
-    id: string
-    title: string
-  }
-}
-
-interface GetReviewsResponse {
-  success: boolean
-  statusCode: number
-  message: string
-  data: Review[]
-}
-
 export async function getReviews(propertyId?: string) {
   try {
     const cookieStore = await cookies()
@@ -232,7 +206,7 @@ export async function getReviews(propertyId?: string) {
       cache: "no-store",
     })
 
-    const result: GetReviewsResponse = await res.json()
+    const result = await res.json()
 
     if (!res.ok) {
       return {

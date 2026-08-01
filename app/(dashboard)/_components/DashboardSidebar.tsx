@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   Sidebar,
@@ -8,24 +8,43 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
-} from "@/components/ui/sidebar";
-import { ISidebarItem, NavbarProps } from "@/lib/types";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { sidebarMenuItems } from "../_config/sidebarMenuItems";
+  SidebarMenuItem,
+} from "@/components/ui/sidebar"
+import { ISidebarItem } from "@/lib/types"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { sidebarMenuItems } from "../_config/sidebarMenuItems"
 
-export default function DashboardSidebar({ user }: NavbarProps) {
-  const pathname = usePathname();
+interface DashboardUser {
+  id: string
+  name: string
+  email: string
+  phone?: string
+  role: "TENANT" | "LANDLORD" | "ADMIN"
+  activeStatus: string
+}
 
-  let navItems: ISidebarItem[] = [];
+interface GetMeResponse {
+  success: boolean
+  message?: string
+  data?: { user: DashboardUser }
+}
+
+interface DashboardSidebarProps {
+  user: GetMeResponse
+}
+
+export default function DashboardSidebar({ user }: DashboardSidebarProps) {
+  const pathname = usePathname()
+
+  let navItems: ISidebarItem[] = []
 
   if (user?.data?.user?.role === "TENANT") {
     navItems = sidebarMenuItems.TENANT
   } else if (user?.data?.user?.role === "LANDLORD") {
-    navItems = sidebarMenuItems.LANDLORD;
+    navItems = sidebarMenuItems.LANDLORD
   } else if (user?.data?.user?.role === "ADMIN") {
-    navItems = sidebarMenuItems.ADMIN;
+    navItems = sidebarMenuItems.ADMIN
   }
 
   return (
@@ -61,5 +80,5 @@ export default function DashboardSidebar({ user }: NavbarProps) {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  );
+  )
 }

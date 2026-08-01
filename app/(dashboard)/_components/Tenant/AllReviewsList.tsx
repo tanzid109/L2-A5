@@ -1,5 +1,5 @@
+import { Review } from "@/lib/types"
 import { Star, User, Home } from "lucide-react"
-import { Review } from "../../_actions/tenantAction"
 
 function formatDate(iso: string) {
     return new Date(iso).toLocaleDateString("en-US", {

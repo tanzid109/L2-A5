@@ -1,6 +1,7 @@
 "use server"
 import { cookies } from "next/headers"
 import { revalidateTag } from "next/cache"
+import { CategoryResponse, UserStatus } from "@/lib/types"
 
 export const getAllUsers = async () => {
   try {
@@ -143,7 +144,6 @@ export const getAllRentals = async () => {
   }
 }
 
-export type UserStatus = "ACTIVE" | "BANNED"
 
 export const updateUserStatus = async (id: string, status: UserStatus) => {
   try {
@@ -194,28 +194,6 @@ export const updateUserStatus = async (id: string, status: UserStatus) => {
           : "Something went wrong while updating the user's status",
     }
   }
-}
-
-export interface Category {
-  id: string
-  name: string
-  createdBy: string
-  createdAt: string
-  updatedAt: string
-}
-
-export interface CategoryResponse {
-  success: boolean
-  statusCode?: number
-  message: string
-  data?: {
-    category?: Category
-    categories?: Category[]
-  }
-}
-
-interface CategoryInput {
-  name: string
 }
 
 export const getCategory = async (): Promise<CategoryResponse> => {

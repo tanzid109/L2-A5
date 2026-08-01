@@ -13,7 +13,8 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { toast } from "sonner"
-import { updateUserStatus, UserStatus } from "../../_actions/adminActions"
+import { updateUserStatus } from "../../_actions/adminActions"
+import { UserStatus } from "@/lib/types"
 
 export interface AdminUser {
     id: string

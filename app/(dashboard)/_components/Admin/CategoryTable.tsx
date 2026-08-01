@@ -31,7 +31,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Plus, Pencil, Trash2 } from "lucide-react"
-import { Category, createCategory, deleteCategory, updateCategory } from "../../_actions/adminActions"
+import { createCategory, deleteCategory, updateCategory } from "../../_actions/adminActions"
+import { Category } from "@/lib/types"
 
 interface CategoryTableProps {
     initialCategories: Category[]

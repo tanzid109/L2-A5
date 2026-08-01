@@ -3,6 +3,8 @@ import { getReviews } from "../../_actions/tenantAction"
 import { AllReviewsList } from "../../_components/Tenant/AllReviewsList"
 import Loading from "@/app/loading"
 
+export const dynamic = "force-dynamic"
+
 export default async function ReviewsPage() {
     const { success, data, message } = await getReviews()
 

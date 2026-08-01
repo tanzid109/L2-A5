@@ -2,8 +2,10 @@
 
 import {
   DeletePropertyResponse,
+  GetCategoryResponse,
   GetLandlordRentalRequestsResponse,
   GetMyPropertiesResponse,
+  RentalStatusAction,
 } from "@/lib/types"
 import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
@@ -157,7 +159,6 @@ export const getLandlordRentalRequests =
       }
     }
   }
-export type RentalStatusAction = "APPROVED" | "REJECTED"
 
 export const rentalStatusChange = async (
   id: string,
@@ -216,22 +217,6 @@ export const rentalStatusChange = async (
   }
 }
 
-export interface Category {
-  id: string
-  name: string
-  createdBy: string
-  createdAt: string
-  updatedAt: string
-}
-
-interface GetCategoryResponse {
-  success: boolean
-  statusCode?: number
-  message?: string
-  data?: {
-    categories: Category[]
-  }
-}
 
 export const getCategory = async (): Promise<GetCategoryResponse> => {
   try {

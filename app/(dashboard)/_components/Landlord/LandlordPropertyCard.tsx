@@ -16,8 +16,8 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { toast } from "sonner"
-import { Category, deleteProperty } from "../../_actions/landlordActions"
-import { MyProperty } from "@/lib/types"
+import {  deleteProperty } from "../../_actions/landlordActions"
+import { Category, MyProperty } from "@/lib/types"
 import { EditPropertyDialog } from "./Editpropertydialog"
 
 interface LandlordPropertyCardProps {
