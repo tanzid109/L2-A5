@@ -31,7 +31,7 @@ export default function DashboardSidebar({user} : NavbarProps) {
   return (
     <Sidebar
       collapsible="none"
-      className=" h-[calc(100svh-0rem)] border-r border-sidebar-border"
+      className="border-r border-sidebar-border"
     >
       <SidebarContent>
         <SidebarGroup>
@@ -40,11 +40,12 @@ export default function DashboardSidebar({user} : NavbarProps) {
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
+                  size={"lg"}
                     asChild
                     isActive={pathname === item.href}
                   >
-                    <Link href={item.href}>
-                      <item.icon />
+                    <Link href={item.href} className="text-md!">
+                      <item.icon className="size-4!"/>
                       <span>{item.label}</span>
                     </Link>
                   </SidebarMenuButton>
