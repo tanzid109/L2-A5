@@ -1,10 +1,20 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import Link from "next/link"
-import { MapPin, BedDouble, Bath, Pencil, Trash2, Loader2 } from "lucide-react"
+import { MapPin, BedDouble, Bath, Trash2, Loader2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { toast } from "sonner"
 import { Category, deleteProperty } from "../../_actions/landlordActions"
 import { MyProperty } from "@/lib/types"
@@ -29,8 +39,6 @@ export function LandlordPropertyCard({ property, categories }: LandlordPropertyC
     const location = [property.address, property.city].filter(Boolean).join(", ")
 
     const handleDelete = () => {
-        if (!window.confirm(`Delete "${property.title}"? This can't be undone.`)) return
-
         startTransition(async () => {
             const res = await deleteProperty(property.id)
             if (res.success) {
@@ -92,14 +100,35 @@ export function LandlordPropertyCard({ property, categories }: LandlordPropertyC
                     <div className="flex-1">
                         <EditPropertyDialog property={property} categories={categories} />
                     </div>
-                    <Button
-                        variant="outline"
-                        onClick={handleDelete}
-                        disabled={isPending}
-                        className="gap-1.5 border-destructive/20 text-destructive hover:bg-destructive/10"
-                    >
-                        {isPending ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
-                    </Button>
+
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button
+                                variant="outline"
+                                disabled={isPending}
+                                className="gap-1.5 border-destructive/20 text-destructive hover:bg-destructive/10"
+                            >
+                                {isPending ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Delete property?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This will permanently delete &quot;{property.title}&quot;. This action cannot be undone.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                    onClick={handleDelete}
+                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                >
+                                    Delete
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </div>
             </div>
         </div>

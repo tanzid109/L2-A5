@@ -11,11 +11,11 @@ const DashboardLayout = async (
 ) => {
     const user = await getMe();
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className="flex flex-col">
             <SidebarProvider>
                 <div className="flex flex-1 flex-col md:flex-row">
                     <DashboardSidebar user={user} />
-                    <div className="flex flex-1 flex-col min-w-0">
+                    <div className="flex flex-1 flex-col">
                         <header className="border-b border-border bg-background/95 px-4 py-3 md:hidden">
                             <div className="flex items-center justify-between">
                                 <div>

@@ -71,15 +71,14 @@ export default function RegisterForm() {
 
     return (
         <div className="min-h-screen">
-            {/* Right - Form Panel */}
-            <div className="bg-white flex flex-col gap-4 p-6 md:p-20">
+            <div className="flex flex-col gap-4 p-6 md:p-10">
                 <div className="flex flex-col flex-1 items-center justify-center">
                     <div className="w-full max-w-lg border border-secondary-foreground rounded-2xl p-10">
                         <Form {...form}>
                             {/* Header */}
                             <div className="mb-6">
                                 <h1 className="text-2xl font-bold">Create New Account</h1>
-                                <p className="text-sm text-balance text-muted-foreground my-2">
+                                <p className="text-sm my-2">
                                     Enter your details below to create an account
                                 </p>
                             </div>
@@ -99,7 +98,7 @@ export default function RegisterForm() {
                                                 <Input
                                                     type="text"
                                                     placeholder="Write your username"
-                                                    className="text-black border border-[#d8d9e0] rounded-xl"
+                                                    className="border rounded-xl"
                                                     {...field}
                                                     disabled={isSubmitting}
                                                 />
@@ -120,7 +119,7 @@ export default function RegisterForm() {
                                                 <Input
                                                     type="email"
                                                     placeholder="Enter your email address"
-                                                    className="text-black border border-[#d8d9e0] rounded-xl"
+                                                    className="border rounded-xl"
                                                     {...field}
                                                     disabled={isSubmitting}
                                                 />
@@ -140,7 +139,7 @@ export default function RegisterForm() {
                                                 <Input
                                                     type="tel"
                                                     placeholder="Enter your phone number"
-                                                    className="text-black border border-[#d8d9e0] rounded-xl"
+                                                    className="border rounded-xl"
                                                     {...field}
                                                     disabled={isSubmitting}
                                                 />
@@ -163,7 +162,7 @@ export default function RegisterForm() {
                                                 disabled={isSubmitting}
                                             >
                                                 <FormControl>
-                                                    <SelectTrigger className="w-full text-black border border-[#d8d9e0] rounded-xl">
+                                                    <SelectTrigger className="w-full border rounded-xl">
                                                         <SelectValue placeholder="Select your role" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -189,7 +188,7 @@ export default function RegisterForm() {
                                                     <Input
                                                         type={showPassword ? "text" : "password"}
                                                         placeholder="Enter your password"
-                                                        className="text-black border border-[#d8d9e0] rounded-xl"
+                                                        className="border rounded-xl"
                                                         {...field}
                                                         disabled={isSubmitting}
                                                     />
@@ -239,17 +238,6 @@ export default function RegisterForm() {
                                     >
                                         Sign In
                                     </Link>
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                    By signing up, you agree to our{" "}
-                                    <Link href="/terms" className="hover:underline text-secondary-foreground">
-                                        Terms & Conditions
-                                    </Link>
-                                    {" "}and review our{" "}
-                                    <Link href="/privacy" className="hover:underline text-secondary-foreground">
-                                        Privacy Policy
-                                    </Link>
-                                    {" "}to learn how we protect your data.
                                 </p>
                             </div>
                         </Form>

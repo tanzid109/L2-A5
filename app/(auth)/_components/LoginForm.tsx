@@ -59,15 +59,14 @@ export default function LoginForm() {
 
     return (
         <div className=" min-h-screen">
-            {/* Right - Form Panel */}
-            <div className="bg-white flex flex-col gap-4 p-6 md:p-20">
+            <div className="flex flex-col gap-4 p-6 md:p-10">
                 <div className="flex flex-col flex-1 items-center justify-center">
                     <div className="w-full max-w-lg border border-secondary-foreground rounded-2xl p-5">
                         <Form {...form}>
                             {/* Header */}
                             <div className="mb-6">
                                 <h1 className="text-2xl font-bold">Welcome Back!</h1>
-                                <p className="text-sm text-balance text-muted-foreground my-2">
+                                <p className="text-sm my-2">
                                     Sign in to continue your account
                                 </p>
                             </div>
@@ -83,12 +82,12 @@ export default function LoginForm() {
                                     name="email"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Username or Email</FormLabel>
+                                            <FormLabel>Email</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="email"
                                                     placeholder="Enter your username or email address"
-                                                    className="text-black border border-[#d8d9e0] rounded-xl"
+                                                    className="border rounded-xl"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -109,7 +108,7 @@ export default function LoginForm() {
                                                     <Input
                                                         type={showPassword ? "text" : "password"}
                                                         placeholder="Enter your password"
-                                                        className="text-black border border-[#d8d9e0] rounded-xl"
+                                                        className="border rounded-xl"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -157,17 +156,6 @@ export default function LoginForm() {
                                     Sign Up
                                 </Link>
                             </p>
-                            <p className="text-md text-muted-foreground">
-                                By signing in, you agree to our{" "}
-                                <Link href="/terms" className="hover:underline text-secondary-foreground">
-                                    Terms & Conditions
-                                </Link>
-                                {" "}and review our{" "}
-                                <Link href="/privacy" className="hover:underline text-secondary-foreground">
-                                    Privacy Policy
-                                </Link>
-                                {" "}to learn how we protect your data.
-                            </p>
                         </div>
                     </div>
 
@@ -181,6 +169,6 @@ export default function LoginForm() {
                     </Link>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
