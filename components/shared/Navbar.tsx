@@ -3,7 +3,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
-import { Building2, Menu, Sun, Moon } from "lucide-react"
+import { Menu, Sun, Moon } from "lucide-react"
 import {
     Sheet,
     SheetClose,
@@ -14,6 +14,7 @@ import {
 import { Button } from "../ui/button"
 import { ProfileDropdown } from "./ProfileDropdown"
 import { logout } from "@/service/logout"
+import { PiCubeTransparentFill } from "react-icons/pi"
 
 const navItems = [
     { name: "Home", href: "/" },
@@ -51,6 +52,7 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
     const isLoggedIn = Boolean(currentUser)
 
     const mobileNav = isLoggedIn ? [...navItems] : navItems
+    const dashboardHref = currentUser ? currentUser.role === "ADMIN" ? "/admin-dashboard" : currentUser.role === "LANDLORD" ? "/landlord-dashboard" : "/tenant-dashboard" : "/"
 
     const handleSignOut = async () => {
         await logout()
@@ -62,7 +64,7 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
-                    <Building2 size={30} />
+                    <PiCubeTransparentFill size={36} />
                 </Link>
 
                 {/* Desktop Nav */}
@@ -162,15 +164,24 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
 
                                 {/* Mobile Auth Buttons */}
                                 <div className="mt-8 flex flex-col gap-3">
-                                    {isLoggedIn ? (
-                                        <SheetClose asChild>
-                                            <Button
-                                                onClick={handleSignOut}
-                                                className="w-full py-5 bg-transparent border border-border text-destructive hover:bg-destructive/10"
-                                            >
-                                                Sign Out
-                                            </Button>
-                                        </SheetClose>
+                                    {isLoggedIn && currentUser ? (
+                                        <>
+                                            <SheetClose asChild>
+                                                <Link href={dashboardHref}>
+                                                    <Button className="w-full py-3 bg-accent text-accent-foreground">
+                                                        Dashboard
+                                                    </Button>
+                                                </Link>
+                                            </SheetClose>
+                                            <SheetClose asChild>
+                                                <Button
+                                                    onClick={handleSignOut}
+                                                    className="w-full py-4 bg-transparent border border-border text-destructive hover:bg-destructive/10"
+                                                >
+                                                    Sign Out
+                                                </Button>
+                                            </SheetClose>
+                                        </>
                                     ) : (
                                         <>
                                             <SheetClose asChild>
