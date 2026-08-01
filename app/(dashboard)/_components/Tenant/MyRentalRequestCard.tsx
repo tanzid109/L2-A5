@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { MyRentalRequest } from "@/lib/types"
-import { makePayment } from "../_actions/tenantAction"
+import { makePayment } from "../../_actions/tenantAction"
 
 interface MyRentalRequestCardProps {
     request: MyRentalRequest

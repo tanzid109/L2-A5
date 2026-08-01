@@ -4,7 +4,7 @@ import { useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
 import { Loader2, Home, Ban } from "lucide-react"
 import { toast } from "sonner"
-import { createRentalRequest } from "../_actions/createRentalRequest"
+import { createRentalRequest } from "../../_actions/createRentalRequest"
 
 interface RentButtonProps {
     propertyId: string

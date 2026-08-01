@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { getAllProperties } from "../_actions/allProperty"
-import { PropertyCard } from "../_components/AllProperties"
+import { PropertyCard } from "../_components/Properties/AllProperties"
 import Loading from "@/app/loading"
 
 export default async function PropertiesPage() {

@@ -1,7 +1,10 @@
 import { Suspense } from "react"
 import { getCategory } from "../../_actions/landlordActions"
-import AddPropertyForm from "../../_components/AddPropertyForm"
 import Loading from "@/app/loading"
+import AddPropertyForm from "../../_components/Landlord/AddPropertyForm"
+
+export const dynamic = "force-dynamic"
+
 
 const page = async () => {
     const { success, data, message } = await getCategory()

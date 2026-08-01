@@ -1,7 +1,10 @@
 import Loading from "@/app/loading"
 import { getCategory } from "../../_actions/landlordActions"
-import { CategoryTable } from "../../_components/CategoryTable"
+import { CategoryTable } from "../../_components/Admin/CategoryTable"
 import { Suspense } from "react"
+
+export const dynamic = "force-dynamic"
+
 
 const page = async () => {
     const result = await getCategory()

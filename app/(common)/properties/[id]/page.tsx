@@ -1,6 +1,6 @@
 import Loading from "@/app/loading"
 import { getAllProperties } from "../../_actions/allProperty"
-import { PropertyDetailsCard } from "../../_components/PropertyDetails"
+import { PropertyDetailsCard } from "../../_components/Properties/PropertyDetails"
 import { Suspense } from "react"
 
 

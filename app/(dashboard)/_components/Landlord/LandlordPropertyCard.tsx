@@ -6,7 +6,7 @@ import { MapPin, BedDouble, Bath, Pencil, Trash2, Loader2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { Category, deleteProperty } from "../_actions/landlordActions"
+import { Category, deleteProperty } from "../../_actions/landlordActions"
 import { MyProperty } from "@/lib/types"
 import { EditPropertyDialog } from "./Editpropertydialog"
 

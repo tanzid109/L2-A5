@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/sheet"
 import { Button } from "../ui/button"
 import { ProfileDropdown } from "./ProfileDropdown"
+import { logout } from "@/service/logout"
 
 const navItems = [
     { name: "Home", href: "/" },
@@ -49,9 +50,11 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
     const currentUser = user?.success ? user.data?.user : undefined
     const isLoggedIn = Boolean(currentUser)
 
-    const mobileNav = isLoggedIn
-        ? [...navItems,]
-        : navItems
+    const mobileNav = isLoggedIn ? [...navItems] : navItems
+
+    const handleSignOut = async () => {
+        await logout()
+    }
 
     return (
         <nav className="bg-background border-b border-border sticky top-0 z-50 w-full py-2">
@@ -71,11 +74,11 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
                                 key={item.name}
                                 href={item.href}
                                 className={`relative text-base font-medium transition-all duration-300
-                                ${isActive ? "text-primary font-semibold" : "text-foreground hover:text-primary/70"}
-                                after:absolute after:left-0 after:-bottom-1 after:h-0.5
-                                after:bg-primary after:transition-all after:duration-300
-                                ${isActive ? "after:w-full" : "after:w-0 hover:after:w-full"}
-                                `}
+                                    ${isActive ? "text-primary font-semibold" : "text-foreground hover:text-primary/70"}
+                                    after:absolute after:left-0 after:-bottom-1 after:h-0.5
+                                    after:bg-primary after:transition-all after:duration-300
+                                    ${isActive ? "after:w-full" : "after:w-0 hover:after:w-full"}
+                                    `}
                             >
                                 {item.name}
                             </Link>
@@ -144,11 +147,11 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
                                                 <Link
                                                     href={item.href}
                                                     className={`relative text-lg font-medium transition-all duration-300
-                                                    ${isActive ? "text-primary font-semibold" : "text-foreground hover:text-primary/70"}
-                                                    after:absolute after:left-0 after:-bottom-1 after:h-0.5
-                                                    after:bg-primary after:transition-all after:duration-300
-                                                    ${isActive ? "after:w-full" : "after:w-0 hover:after:w-full"}
-                                                    `}
+                                                        ${isActive ? "text-primary font-semibold" : "text-foreground hover:text-primary/70"}
+                                                        after:absolute after:left-0 after:-bottom-1 after:h-0.5
+                                                        after:bg-primary after:transition-all after:duration-300
+                                                        ${isActive ? "after:w-full" : "after:w-0 hover:after:w-full"}
+                                                        `}
                                                 >
                                                     {item.name}
                                                 </Link>
@@ -161,14 +164,12 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
                                 <div className="mt-8 flex flex-col gap-3">
                                     {isLoggedIn ? (
                                         <SheetClose asChild>
-                                            <form action="/api/logout" method="post">
-                                                <Button
-                                                    type="submit"
-                                                    className="w-full py-5 bg-transparent border border-border text-destructive hover:bg-destructive/10"
-                                                >
-                                                    Sign Out
-                                                </Button>
-                                            </form>
+                                            <Button
+                                                onClick={handleSignOut}
+                                                className="w-full py-5 bg-transparent border border-border text-destructive hover:bg-destructive/10"
+                                            >
+                                                Sign Out
+                                            </Button>
                                         </SheetClose>
                                     ) : (
                                         <>

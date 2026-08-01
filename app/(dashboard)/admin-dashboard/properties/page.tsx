@@ -1,7 +1,10 @@
 import { Suspense } from "react"
 import { getAllProperties } from "../../_actions/adminActions"
-import { AdminPropertiesTable } from "../../_components/Adminpropertiestable"
+import { AdminPropertiesTable } from "../../_components/Admin/Adminpropertiestable"
 import Loading from "@/app/loading"
+
+export const dynamic = "force-dynamic"
+
 
 const page = async () => {
     const { success, data, message } = await getAllProperties()

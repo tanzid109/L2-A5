@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getAllProperties } from "../../_actions/allProperty"
-import { PropertyCard } from "../AllProperties"
+import { PropertyCard } from "../Properties/AllProperties"
 
 
 export default async function FeaturedProperties() {

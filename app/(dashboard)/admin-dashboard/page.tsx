@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import Loading from "@/app/loading"
-import AdminOverview from "../_components/AdminOverview"
+import AdminOverview from "../_components/Admin/AdminOverview"
 
 const page = () => {
     return (

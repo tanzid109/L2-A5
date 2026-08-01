@@ -1,4 +1,3 @@
-// src/components/shared/PropertyDetailsCard.tsx
 import {
     MapPin,
     BedDouble,
@@ -10,7 +9,7 @@ import {
     Clock,
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { Property } from "../_actions/allProperty"
+import { Property } from "../../_actions/allProperty"
 import { RentButton } from "./RentButton"
 
 const statusStyles: Record<string, string> = {

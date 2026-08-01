@@ -1,7 +1,9 @@
 import { Suspense } from "react"
 import { getLandlordRentalRequests } from "../../_actions/landlordActions"
-import { RentalRequestCard } from "../../_components/RentalRequestCard"
+import { RentalRequestCard } from "../../_components/Tenant/RentalRequestCard"
 import Loading from "@/app/loading"
+
+export const dynamic = "force-dynamic"
 
 const page = async () => {
     const { success, data, message } = await getLandlordRentalRequests()

@@ -1,8 +1,9 @@
 import { Suspense } from "react"
 import { getMyPayments } from "../../_actions/tenantAction"
-import { PaymentCard } from "../../_components/PaymentCard"
+import { PaymentCard } from "../../_components/Tenant/PaymentCard"
 import Loading from "@/app/loading"
 
+export const dynamic = "force-dynamic"
 
 const page = async () => {
     const { success, data, message } = await getMyPayments()

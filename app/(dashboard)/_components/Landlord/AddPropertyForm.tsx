@@ -24,8 +24,8 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Spinner } from "@/components/ui/spinner"
-import { createProperty } from "../_actions/createProperty"
 import { toast } from "sonner"
+import { createProperty } from "../../_actions/createProperty"
 
 const addPropertySchema = z.object({
     categoryId: z.string().min(1, "Please select a category"),

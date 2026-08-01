@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import Loading from "@/app/loading"
-import ContactPage from "../_components/Contact"
+import ContactPage from "../_components/Contact/Contact"
 
 const page = () => {
     return (

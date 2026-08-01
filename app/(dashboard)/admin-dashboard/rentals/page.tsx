@@ -1,7 +1,10 @@
 import { Suspense } from "react"
 import { getAllRentals } from "../../_actions/adminActions"
-import { AdminRentalsTable } from "../../_components/Adminrentalstable"
+import { AdminRentalsTable } from "../../_components/Admin/Adminrentalstable"
 import Loading from "@/app/loading"
+
+export const dynamic = "force-dynamic"
+
 
 const page = async () => {
     const { success, data, message } = await getAllRentals()

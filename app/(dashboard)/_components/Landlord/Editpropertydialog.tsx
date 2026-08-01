@@ -34,7 +34,7 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
 import { MyProperty } from "@/lib/types"
-import { updateProperty } from "../_actions/createProperty"
+import { updateProperty } from "../../_actions/createProperty"
 
 const editPropertySchema = z.object({
     categoryId: z.string().min(1, "Please select a category"),

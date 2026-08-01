@@ -1,7 +1,10 @@
 import { Suspense } from "react"
 import { getAllUsers } from "../../_actions/adminActions"
-import { AdminUsersTable } from "../../_components/Adminuserstable"
+import { AdminUsersTable } from "../../_components/Admin/Adminuserstable"
 import Loading from "@/app/loading"
+
+export const dynamic = "force-dynamic"
+
 
 const page = async () => {
     const { success, data, message } = await getAllUsers()

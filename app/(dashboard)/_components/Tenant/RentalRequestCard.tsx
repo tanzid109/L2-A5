@@ -5,7 +5,7 @@ import { User, Mail, Phone, Home, Calendar, CreditCard, Check, X, Loader2 } from
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { rentalStatusChange } from "../_actions/landlordActions"
+import { rentalStatusChange } from "../../_actions/landlordActions"
 import { RentalRequest } from "@/lib/types"
 
 interface RentalRequestCardProps {
