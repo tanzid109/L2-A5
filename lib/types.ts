@@ -10,8 +10,6 @@ export type ISidebarItem = {
   icon: LucideIcon | IconType
 }
 
-// ---------- Shared base entities ----------
-
 export interface Category {
   id: string
   name: string
@@ -26,8 +24,6 @@ export interface PersonSummary {
   email: string
   phone?: string
 }
-
-// Base property shape — every "property" variant below is built from this
 export interface BaseProperty {
   id: string
   landlordId: string
@@ -52,8 +48,6 @@ export interface PropertyWithLandlord extends PropertyWithCategory {
   landlord: PersonSummary
 }
 
-// ---------- Rental requests ----------
-
 export interface BaseRentalRequest {
   id: string
   propertyId: string
@@ -65,7 +59,6 @@ export interface BaseRentalRequest {
   updatedAt: string
 }
 
-// Tenant-side view: request has full property+landlord info, minimal payment info
 export interface MyRentalRequest extends BaseRentalRequest {
   status: "PENDING" | "APPROVED" | "ACTIVE" | "REJECTED" | "COMPLETED"
   property: PropertyWithLandlord
@@ -76,7 +69,6 @@ export interface MyRentalRequest extends BaseRentalRequest {
   } | null
 }
 
-// Landlord-side view: request has tenant info + full property, full payment record
 export interface RentalRequest extends BaseRentalRequest {
   status: "PENDING" | "ACTIVE" | "REJECTED" | "COMPLETED"
   tenant: PersonSummary
@@ -97,8 +89,6 @@ export interface GetMyRentalRequestsResponse {
   message: string
   data?: MyRentalRequest[]
 }
-
-// ---------- Properties (landlord's own listings) ----------
 
 export type MyProperty = BaseProperty
 
@@ -141,8 +131,6 @@ export interface UpdatePropertyResponse {
   data?: { id: string }
 }
 
-// ---------- Payments ----------
-
 export interface Payment {
   id: string
   rentalRequestId: string
@@ -173,8 +161,6 @@ export interface CreatePaymentResponse {
   data?: { checkoutUrl: string }
 }
 
-// ---------- Categories ----------
-
 export interface GetCategoryResponse {
   success: boolean
   statusCode?: number
@@ -188,8 +174,6 @@ export interface CategoryResponse {
   message: string
   data?: { category?: Category; categories?: Category[] }
 }
-
-// ---------- Reviews ----------
 
 export interface Review {
   id: string

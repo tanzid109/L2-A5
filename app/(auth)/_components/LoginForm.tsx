@@ -115,7 +115,7 @@ export default function LoginForm() {
                                                 <button
                                                     type="button"
                                                     onClick={() => setShowPassword((prev) => !prev)}
-                                                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:text-primary text-[#656568] cursor-pointer transition-colors"
+                                                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:text-primary cursor-pointer transition-colors"
                                                     aria-label={showPassword ? "Hide password" : "Show password"}
                                                 >
                                                     {showPassword ? (
@@ -132,7 +132,6 @@ export default function LoginForm() {
                                 {/* Submit Button */}
                                 <Button
                                     type="submit"
-                                    variant="secondary"
                                     disabled={isSubmitting}
                                     className="w-full flex justify-center items-center gap-2"
                                 >
