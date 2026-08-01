@@ -1,5 +1,7 @@
+import { Suspense } from "react"
 import { getAllProperties } from "../../_actions/adminActions"
 import { AdminPropertiesTable } from "../../_components/Adminpropertiestable"
+import Loading from "@/app/loading"
 
 const page = async () => {
     const { success, data, message } = await getAllProperties()
@@ -13,9 +15,11 @@ const page = async () => {
     }
 
     return (
-        <div>
-            <AdminPropertiesTable properties={data} />
-        </div>
+        <Suspense fallback={<Loading />}>
+            <div>
+                <AdminPropertiesTable properties={data} />
+            </div>
+        </Suspense>
     )
 }
 export default page

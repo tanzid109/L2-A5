@@ -1,5 +1,7 @@
+import Loading from "@/app/loading"
 import { getAllProperties } from "../../_actions/allProperty"
 import { PropertyDetailsCard } from "../../_components/PropertyDetails"
+import { Suspense } from "react"
 
 
 export default async function PropertyDetailsPage({
@@ -21,8 +23,10 @@ export default async function PropertyDetailsPage({
     }
 
     return (
-        <div className="w-10/12 mx-auto py-10 max-w-3xl">
-            <PropertyDetailsCard property={property} />
-        </div>
+        <Suspense fallback={<Loading />}>
+            <div className="w-10/12 mx-auto py-10 max-w-3xl">
+                <PropertyDetailsCard property={property} />
+            </div>
+        </Suspense>
     )
 }

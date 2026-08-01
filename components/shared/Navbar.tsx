@@ -17,7 +17,8 @@ import { ProfileDropdown } from "./ProfileDropdown"
 const navItems = [
     { name: "Home", href: "/" },
     { name: "Properties", href: "/properties" },
-    { name: "Categories", href: "/categories" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
 ]
 
 interface NavbarUser {

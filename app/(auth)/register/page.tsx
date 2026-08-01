@@ -1,12 +1,15 @@
-import React from 'react';
-import RegisterForm from '../_components/RegisterForm';
+import { Suspense } from "react"
+import Loading from "@/app/loading"
+import RegisterForm from "../_components/RegisterForm"
 
 const page = () => {
     return (
-        <div>
-            <RegisterForm />
-        </div>
-    );
-};
+        <Suspense fallback={<Loading />}>
+            <div>
+                <RegisterForm />
+            </div>
+        </Suspense>
+    )
+}
 
-export default page;
+export default page

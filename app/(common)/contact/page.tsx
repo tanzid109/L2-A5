@@ -1,12 +1,12 @@
 import { Suspense } from "react"
 import Loading from "@/app/loading"
-import LoginForm from "../_components/LoginForm"
+import ContactPage from "../_components/Contact"
 
 const page = () => {
     return (
         <Suspense fallback={<Loading />}>
             <div>
-                <LoginForm />
+                <ContactPage />
             </div>
         </Suspense>
     )

@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { Toaster } from 'sonner';
 import { getMe } from "@/service/getMe";
 import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 
 
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-sans' })
@@ -38,9 +39,10 @@ const RootLayout = async ({
     >
       <body>
         <ThemeProvider>
-          <Navbar user={user}/>
+          <Navbar user={user} />
           {children}
         </ThemeProvider>
+        <Footer />
         <Toaster />
       </body>
     </html>

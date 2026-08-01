@@ -1,11 +1,14 @@
-import React from 'react';
+import { Suspense } from "react"
+import Loading from "@/app/loading"
 
 const page = () => {
     return (
-        <div>
-            
-        </div>
-    );
-};
+        <Suspense fallback={<Loading />}>
+            <div>
 
-export default page;
+            </div>
+        </Suspense>
+    )
+}
+
+export default page

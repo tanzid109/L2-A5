@@ -1,5 +1,7 @@
+import { Suspense } from "react"
 import { getLandlordRentalRequests } from "../../_actions/landlordActions"
 import { RentalRequestCard } from "../../_components/RentalRequestCard"
+import Loading from "@/app/loading"
 
 const page = async () => {
     const { success, data, message } = await getLandlordRentalRequests()
@@ -13,11 +15,13 @@ const page = async () => {
     }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.map((request) => (
-                <RentalRequestCard key={request.id} request={request} />
-            ))}
-        </div>
+        <Suspense fallback={<Loading />}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {data.map((request) => (
+                    <RentalRequestCard key={request.id} request={request} />
+                ))}
+            </div>
+        </Suspense>
     )
 }
 

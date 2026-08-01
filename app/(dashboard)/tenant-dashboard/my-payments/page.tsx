@@ -1,5 +1,7 @@
+import { Suspense } from "react"
 import { getMyPayments } from "../../_actions/tenantAction"
 import { PaymentCard } from "../../_components/PaymentCard"
+import Loading from "@/app/loading"
 
 
 const page = async () => {
@@ -14,11 +16,13 @@ const page = async () => {
     }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.map((payment) => (
-                <PaymentCard key={payment.id} payment={payment} />
-            ))}
-        </div>
+        <Suspense fallback={<Loading />}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {data.map((payment) => (
+                    <PaymentCard key={payment.id} payment={payment} />
+                ))}
+            </div>
+        </Suspense>
     )
 }
 

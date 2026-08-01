@@ -1,18 +1,16 @@
+import { Suspense } from "react"
 import { getMyRentalRequests } from "../../_actions/tenantAction"
 import { MyRentalRequestCard } from "../../_components/MyRentalRequestCard"
+import Loading from "@/app/loading"
 
 const page = async () => {
     const { success, data, message } = await getMyRentalRequests()
 
-    if (!success || !data?.length) {
-        return (
-            <div className="bg-background border border-border rounded-xl p-8 text-center text-muted-foreground">
-                {message ?? "No rental requests yet."}
-            </div>
-        )
-    }
-
-    return (
+    const content = !success || !data?.length ? (
+        <div className="bg-background border border-border rounded-xl p-8 text-center text-muted-foreground">
+            {message ?? "No rental requests yet."}
+        </div>
+    ) : (
         <div className="flex flex-col gap-6">
             <div>
                 <h1 className="text-xl font-semibold text-foreground">Rental Requests</h1>
@@ -28,6 +26,8 @@ const page = async () => {
             </div>
         </div>
     )
+
+    return <Suspense fallback={<Loading />}>{content}</Suspense>
 }
 
 export default page

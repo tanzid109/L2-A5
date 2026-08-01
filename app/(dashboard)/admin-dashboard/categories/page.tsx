@@ -1,5 +1,7 @@
+import Loading from "@/app/loading"
 import { getCategory } from "../../_actions/landlordActions"
 import { CategoryTable } from "../../_components/CategoryTable"
+import { Suspense } from "react"
 
 const page = async () => {
     const result = await getCategory()
@@ -15,9 +17,11 @@ const page = async () => {
     const categories = result.data?.categories ?? []
 
     return (
-        <div className="p-6">
-            <CategoryTable initialCategories={categories} />
-        </div>
+        <Suspense fallback={<Loading />}>
+            <div className="p-6">
+                <CategoryTable initialCategories={categories} />
+            </div>
+        </Suspense>
     )
 }
 

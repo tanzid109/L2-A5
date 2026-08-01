@@ -1,5 +1,7 @@
+import { Suspense } from "react"
 import { getCategory, getMyProperties } from "../../_actions/landlordActions"
 import { LandlordPropertyCard } from "../../_components/LandlordPropertyCard"
+import Loading from "@/app/loading"
 
 const page = async () => {
     const { success, data, message } = await getMyProperties()
@@ -16,11 +18,14 @@ const page = async () => {
     const categories = categoriesRes.data?.categories ?? []
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.properties.map((property) => (
-                <LandlordPropertyCard key={property.id} property={property} categories={categories} />
-            ))}
-        </div>
+        <Suspense fallback={<Loading />}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {data.properties.map((property) => (
+                    <LandlordPropertyCard key={property.id} property={property} categories={categories} />
+                ))}
+            </div>
+        </Suspense>
+
     )
 }
 export default page
