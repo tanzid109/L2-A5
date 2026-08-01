@@ -50,7 +50,7 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
     const isLoggedIn = Boolean(currentUser)
 
     const mobileNav = isLoggedIn
-        ? [...navItems, { name: "Profile", href: "/profile" }]
+        ? [...navItems,]
         : navItems
 
     return (
@@ -58,7 +58,7 @@ export default function Navbar({ user }: { user: GetMeResponse }) {
             <div className="w-10/12 mx-auto py-2 flex items-center justify-between">
 
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2 text-primary">
+                <Link href="/" className="flex items-center gap-2">
                     <Building2 size={30} />
                 </Link>
 

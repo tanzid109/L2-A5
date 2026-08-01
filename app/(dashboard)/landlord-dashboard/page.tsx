@@ -1,11 +1,12 @@
 import { Suspense } from "react"
 import Loading from "@/app/loading"
+import LandlordOverview from "../_components/LandlordOverview"
 
 const page = () => {
     return (
         <Suspense fallback={<Loading />}>
             <div>
-                landlord
+                <LandlordOverview />
             </div>
         </Suspense>
     )
