@@ -5,7 +5,7 @@ import { jwtUtils } from "./utils/jwt"
 import { getNewAccessToken } from "./service/refreshToken"
 
 const AUTH_ROUTES = ["/login", "/register"]
-const PUBLIC_ROUTES = ["/", "/properties", "/about", "/contact"]
+const PUBLIC_ROUTES = ["/", "/properties", "/about", "/contact","/payment"]
 
 function redirectWithCookies(
   url: string,
