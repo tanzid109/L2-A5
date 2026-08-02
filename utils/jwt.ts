@@ -18,7 +18,6 @@ const verifyToken = (token: string, secret: string) => {
         }
       }
     } catch {
-      // ignore decode errors and fall back below
     }
 
     console.log("Token verification failed:", error)

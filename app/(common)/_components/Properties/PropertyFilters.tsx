@@ -1,4 +1,3 @@
-// _components/Properties/PropertyFilters.tsx
 "use client"
 
 import { useState, useTransition } from "react"

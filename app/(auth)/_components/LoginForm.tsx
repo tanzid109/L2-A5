@@ -149,8 +149,8 @@ export default function LoginForm() {
                     <div className="mt-6 space-y-2 text-sm">
                         <p className="flex flex-col justify-center items-center">
                             Don&apos;t have an account?{" "}
-                            <Link href="/sign-up" className="text-secondary-foreground hover:underline my-2 text-base font-bold">
-                                Sign Up
+                            <Link href="/register" className=" hover:underline my-2 text-base font-bold">
+                                Register Now
                             </Link>
                         </p>
                     </div>

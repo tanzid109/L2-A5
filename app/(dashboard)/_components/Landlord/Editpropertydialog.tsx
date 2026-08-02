@@ -105,9 +105,6 @@ export function EditPropertyDialog({ property, categories }: EditPropertyDialogP
         }
     }
 
-    // Reset the form back to the property's current values whenever the
-    // dialog is reopened, so stale edits from a previously-cancelled
-    // session don't linger.
     const handleOpenChange = (next: boolean) => {
         if (next) {
             form.reset({
@@ -342,7 +339,6 @@ export function EditPropertyDialog({ property, categories }: EditPropertyDialogP
 
                         <Button
                             type="submit"
-                            variant="secondary"
                             disabled={isSubmitting}
                             className="w-full flex justify-center items-center gap-2 mt-2"
                         >

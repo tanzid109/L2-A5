@@ -24,6 +24,16 @@ export interface PersonSummary {
   email: string
   phone?: string
 }
+
+export interface PropertyReview {
+  id: string
+  propertyId: string
+  tenantId: string
+  rating: number
+  comment: string
+  createdAt: string
+  updatedAt: string
+}
 export interface BaseProperty {
   id: string
   landlordId: string
@@ -217,6 +227,7 @@ export interface Property {
   updatedAt: string
   category: Category
   landlord: Landlord
+  reviews: PropertyReview[]
 }
 
 export interface GetAllPropertiesResponse {

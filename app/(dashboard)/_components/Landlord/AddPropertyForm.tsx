@@ -315,7 +315,6 @@ export default function AddPropertyForm({ categories }: AddPropertyFormProps) {
                     {/* Submit */}
                     <Button
                         type="submit"
-                        variant="secondary"
                         disabled={isSubmitting}
                         className="w-full flex justify-center items-center gap-2 mt-6"
                     >

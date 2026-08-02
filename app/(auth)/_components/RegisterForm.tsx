@@ -231,10 +231,10 @@ export default function RegisterForm() {
                             <p>
                                 Already have an account?{" "}
                                 <Link
-                                    href="/sign-in"
+                                    href="/login"
                                     className="text-secondary-foreground font-bold hover:underline"
                                 >
-                                    Sign In
+                                    Login
                                 </Link>
                             </p>
                         </div>

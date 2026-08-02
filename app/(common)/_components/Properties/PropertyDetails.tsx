@@ -7,6 +7,8 @@ import {
     Mail,
     Calendar,
     Clock,
+    Star,
+    MessageSquare,
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { RentButton } from "./RentButton"
@@ -26,9 +28,30 @@ function formatDate(iso: string) {
     })
 }
 
+function StarRating({ rating }: { rating: number }) {
+    return (
+        <div className="flex items-center gap-0.5">
+            {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                    key={i}
+                    size={14}
+                    className={
+                        i < rating
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "fill-transparent text-muted-foreground/30"
+                    }
+                />
+            ))}
+        </div>
+    )
+}
+
 export function PropertyDetailsCard({ property }: { property: Property }) {
     const price = Number(property.price)
     const location = [property.address, property.city].filter(Boolean).join(", ")
+
+    const reviews = property.reviews ?? []
+    const reviewCount = reviews.length
 
     return (
         <div className="bg-background border border-border rounded-xl overflow-hidden">
@@ -120,6 +143,41 @@ export function PropertyDetailsCard({ property }: { property: Property }) {
                         <Mail size={16} />
                         <span>{property.landlord.email}</span>
                     </div>
+                </div>
+
+                {/* Reviews */}
+                <div className="pt-2 border-t border-border/60">
+                    <h2 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
+                        <MessageSquare size={15} className="text-muted-foreground" />
+                        Reviews {reviewCount > 0 && `(${reviewCount})`}
+                    </h2>
+
+                    {reviewCount === 0 ? (
+                        <p className="text-sm text-muted-foreground">
+                            No reviews yet.
+                        </p>
+                    ) : (
+                        <div className="flex flex-col gap-3">
+                            {reviews.map((review) => (
+                                <div
+                                    key={review.id}
+                                    className="bg-accent/50 rounded-lg p-4 flex flex-col gap-1.5"
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <StarRating rating={review.rating} />
+                                        <span className="text-xs text-muted-foreground">
+                                            {formatDate(review.createdAt)}
+                                        </span>
+                                    </div>
+                                    {review.comment && (
+                                        <p className="text-sm text-foreground/90 leading-relaxed">
+                                            {review.comment}
+                                        </p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* Meta / timestamps */}

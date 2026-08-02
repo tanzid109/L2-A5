@@ -38,7 +38,6 @@ export function RentalRequestCard({ request }: RentalRequestCardProps) {
     const { tenant, property, payment } = request
     const [isPending, startTransition] = useTransition()
     const [status, setStatus] = useState(request.status)
-    // track which action is in flight so only that button shows a spinner
     const [activeAction, setActiveAction] = useState<"APPROVED" | "REJECTED" | null>(null)
 
     const handleStatusChange = (nextStatus: "APPROVED" | "REJECTED") => {

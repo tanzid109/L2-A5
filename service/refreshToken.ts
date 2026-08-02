@@ -9,8 +9,6 @@ export const getNewAccessToken = async () => {
   const refreshToken = cookieStore.get("refreshToken")?.value || null
 
   if (!refreshToken) {
-    // throw new Error("User Not Logged In!");
-
     return {
       success: false,
       message: "Refresh token not found!",
@@ -54,7 +52,6 @@ export const isAccessTokenExist = async () => {
     : null
 
   if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
-    //access token has expired but refresh token is valid, get new access token from backend
     const result = await getNewAccessToken()
 
     if (result.success) {

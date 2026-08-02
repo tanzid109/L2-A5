@@ -46,15 +46,6 @@ export const loginAction = async (
 
     const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload
 
-    // if (
-    //   redirectTo &&
-    //   typeof redirectTo === "string" &&
-    //   redirectTo.startsWith("/") &&
-    //   !redirectTo.startsWith("//")
-    // ) {
-    //   redirect(redirectTo)
-    // }
-
     if (decodedToken.role === "TENANT") {
       redirect("/tenant-dashboard")
     } else if (decodedToken.role === "LANDLORD") {
