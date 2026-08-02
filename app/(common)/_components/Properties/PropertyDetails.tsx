@@ -9,8 +9,8 @@ import {
     Clock,
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { Property } from "../../_actions/allProperty"
 import { RentButton } from "./RentButton"
+import { Property } from "@/lib/types"
 
 const statusStyles: Record<string, string> = {
     AVAILABLE: "bg-primary/10 text-primary border-primary/20",

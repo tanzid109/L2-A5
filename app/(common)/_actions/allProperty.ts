@@ -1,50 +1,6 @@
 "use server"
 
-export interface Category {
-  id: string
-  name: string
-  createdBy: string
-  createdAt: string
-  updatedAt: string
-}
-
-export interface Landlord {
-  id: string
-  name: string
-  email: string
-}
-
-export interface Property {
-  id: string
-  landlordId: string
-  categoryId: string
-  title: string
-  description?: string
-  address: string
-  city: string
-  price: string
-  bedrooms: number
-  bathrooms: number
-  status: "AVAILABLE" | "RENTED" | "PENDING"
-  createdAt: string
-  updatedAt: string
-  category: Category
-  landlord: Landlord
-}
-
-interface GetAllPropertiesResponse {
-  success: boolean
-  statusCode?: number
-  message?: string
-  data?: Property[]
-}
-
-interface GetAllPropertiesParams {
-  page?: number
-  limit?: number
-  category?: string
-  search?: string
-}
+import { GetAllPropertiesParams, GetAllPropertiesResponse } from "@/lib/types"
 
 export const getAllProperties = async (
   params?: GetAllPropertiesParams
@@ -56,6 +12,10 @@ export const getAllProperties = async (
     if (params?.limit) query.set("limit", String(params.limit))
     if (params?.category) query.set("category", params.category)
     if (params?.search) query.set("search", params.search)
+    if (params?.city) query.set("city", params.city)
+    if (params?.status) query.set("status", params.status)
+    if (params?.minPrice) query.set("minPrice", String(params.minPrice))
+    if (params?.maxPrice) query.set("maxPrice", String(params.maxPrice))
 
     const queryString = query.toString()
     const url = `${process.env.BACKEND_API_URL}/api/property${queryString ? `?${queryString}` : ""}`

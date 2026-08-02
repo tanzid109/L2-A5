@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { MapPin, BedDouble, Bath } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { Property } from "../../_actions/allProperty"
+import { Property } from "@/lib/types"
 
 export function PropertyCard({ property }: { property: Property }) {
     const price = Number(property.price)

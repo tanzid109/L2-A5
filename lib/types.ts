@@ -193,3 +193,46 @@ export interface GetReviewsResponse {
   message: string
   data: Review[]
 }
+
+
+export interface Landlord {
+  id: string
+  name: string
+  email: string
+}
+
+export interface Property {
+  id: string
+  landlordId: string
+  categoryId: string
+  title: string
+  description?: string
+  address: string
+  city: string
+  price: string
+  bedrooms: number
+  bathrooms: number
+  status: "AVAILABLE" | "RENTED" | "PENDING"
+  createdAt: string
+  updatedAt: string
+  category: Category
+  landlord: Landlord
+}
+
+export interface GetAllPropertiesResponse {
+  success: boolean
+  statusCode?: number
+  message?: string
+  data?: Property[]
+}
+
+export interface GetAllPropertiesParams {
+  page?: number
+  limit?: number
+  category?: string
+  search?: string
+  city?: string
+  status?: "AVAILABLE" | "RENTED" | "PENDING"
+  minPrice?: number
+  maxPrice?: number
+}
